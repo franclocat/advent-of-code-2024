@@ -6,7 +6,7 @@ def main():
     total_diff = 0
     repetition_count = {}
     similarity = 0
-    with  open("C:/Users/fralo/Desktop/advent-of-code-2024/day01/input.txt", "r") as file:
+    with  open("day01\input.txt", "r") as file:
         for line in file:
             line_numbers = line.split()
             list1.append(line_numbers[0])

@@ -1,23 +1,31 @@
-# Solution for Day 2
-def is_safe(line):
-    levels = list(map(int, report.split()))
-    # Check if the levels are either all increasing or all decreasing
-    is_increasing = all(levels[i] < levels[i + 1] for i in range(len(levels) - 1))
-    is_decreasing = all(levels[i] > levels[i + 1] for i in range(len(levels) - 1))
-    
-    # Check if the differences are within the range [1, 3]
-    valid_differences = all(1 <= abs(levels[i] - levels[i + 1]) <= 3 for i in range(len(levels) - 1))
-    
-    # Return True only if both conditions are met
-    return (is_increasing or is_decreasing) and valid_differences
+def is_safe(levels):
+    if len(levels) < 2:
+        return False
 
-def main():
+    increasing = all(1 <= levels[i + 1] - levels[i] <= 3 for i in range(len(levels) - 1))
+    decreasing = all(-3 <= levels[i + 1] - levels[i] <= -1 for i in range(len(levels) - 1))
+    return increasing or decreasing
+
+
+def count_safe_reports_with_dampener(reports):
     safe_count = 0
-    with open("C:/Projects/advent-of-code-2024/day02/input.txt", "r") as file:
-        for line in file:
-            if is_safe(line.strip()):
-                safe_count += 1
-    print(f"Number of safe reports: {safe_count}")
 
-if __name__ == '__main__':
-    main()
+    for report in reports:
+        if is_safe(report):
+            # Safe without removing any level
+            safe_count += 1
+        else:
+            # Check if removing a single level makes it safe
+            for i in range(len(report)):
+                modified_report = report[:i] + report[i + 1:]
+                if is_safe(modified_report):
+                    safe_count += 1
+                    break
+
+    return safe_count
+
+with open("day02\input.txt", "r") as f:
+    reports = [list(map(int, line.split())) for line in f]
+
+result = count_safe_reports_with_dampener(reports)
+print(f"Number of safe reports: {result}")
