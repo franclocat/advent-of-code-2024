@@ -1,4 +1,3 @@
-import re
 # Solution for Day 4
 def main():
     grid = []
