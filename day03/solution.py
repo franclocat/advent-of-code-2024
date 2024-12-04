@@ -3,9 +3,10 @@ import re
 def scan_multiplication(segment):
     result = 0
     # Find all occurrences of `mul(a, b)`
-    multiplications = re.findall(r"mul\((\d{1,3}),(\d{1,3})\)", segment)
-    for a, b in multiplications:
-        result += int(a) * int(b)
+    multiplications = re.findall(r"mul\(\d{1,3},\d{1,3}\)", segment)
+    for mult in multiplications:
+        nums_in_mult = re.findall("\d{1,3}", mult)
+        result += int(nums_in_mult[0]) * int(nums_in_mult[1])
     return result
 
 def filter_valid_segments(line):
@@ -25,13 +26,16 @@ def filter_valid_segments(line):
 
 def main():
     total = 0
+    string = ""
     with open("day03/input.txt", "r") as file:
         for line in file:
-            # Get valid segments by filtering out ignored portions
-            valid_segments = filter_valid_segments(line)
-            for segment in valid_segments:
-                # Compute and sum results from each segment
-                total += scan_multiplication(segment)
+            string += line.replace("\n", "")
+    
+    # Get valid segments by filtering out ignored portions
+    valid_segments = filter_valid_segments(string)
+    for segment in valid_segments:
+        # Compute and sum results from each segment
+        total += scan_multiplication(segment)
     print(total)
 
 if __name__ == '__main__':
