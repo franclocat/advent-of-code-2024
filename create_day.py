@@ -8,12 +8,14 @@ def create_day(day):
     with open(f"{folder_name}/solution.py", "w") as f:
         f.write(f"# Solution for Day {day}\n\n")
         f.write("def main():\n")
-        f.write("    # Your solution goes here\n")
         f.write("    pass\n\n")
         f.write("if __name__ == '__main__':\n")
         f.write("    main()\n")
     
     with open(f"{folder_name}/input.txt", "w") as f:
+        f.write("")  # Placeholder for input
+        
+    with open(f"{folder_name}/example.txt", "w") as f:
         f.write("")  # Placeholder for input
 
     with open(f"{folder_name}/README.md", "w") as f:
